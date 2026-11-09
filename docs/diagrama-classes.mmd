@@ -1,0 +1,76 @@
+classDiagram
+    class DBModel {
+        <<SQLAlchemy base>>
+    }
+
+    class User {
+        +int user_id
+        +string nome
+        +string email
+        +string senha_hash
+        +listar_todos()
+        +buscar_por_id(item_id)
+        +salvar(data)
+        +atualizar(data)
+        +deletar()
+    }
+
+    class SchoolClass {
+        +int turma_id
+        +string nome_turma
+        +int user_id
+        +string descricao_atividade
+        +listar_todos()
+        +buscar_por_id(item_id)
+        +salvar(data)
+        +atualizar(data)
+        +deletar()
+    }
+
+    class Activity {
+        +int atividade_id
+        +string titulo
+        +string descricao_atividade
+        +int turma_id
+        +string data_entrega
+        +listar_todos()
+        +buscar_por_id(item_id)
+        +salvar(data)
+        +atualizar(data)
+        +deletar()
+    }
+
+    class Delivery {
+        +int entrega_id
+        +string data_entrega
+        +string status_entrega
+        +int atividade_id
+        +int user_id
+        +int nota
+        +listar_todos()
+        +buscar_por_id(item_id)
+        +salvar(data)
+        +atualizar(data)
+        +deletar()
+    }
+
+    class AuthSession {
+        +int sessao_id
+        +string token_hash
+        +int user_id
+        +abrir(usuario)
+        +buscar_por_token(token)
+        +revogar(token)
+    }
+
+    User --|> DBModel
+    AuthSession --|> DBModel
+    User "1" --> "0..*" AuthSession : autentica
+    SchoolClass --|> DBModel
+    Activity --|> DBModel
+    Delivery --|> DBModel
+
+    User "1" --> "0..*" SchoolClass : responsável
+    SchoolClass "1" *-- "0..*" Activity : contém
+    Activity "1" *-- "0..*" Delivery : possui entregas
+    User "1" --> "0..*" Delivery : realiza

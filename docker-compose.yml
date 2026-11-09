@@ -1,0 +1,10 @@
+services:
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mais_aulas
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./backend/database/create_database.sql:/docker-entrypoint-initdb.d/01-create_database.sql:ro
